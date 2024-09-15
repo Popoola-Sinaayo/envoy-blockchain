@@ -1,8 +1,10 @@
 "use client";
 import getIfAddressIsMember from "@/contractFunctions/getIfMember";
 import getNumberOfLots from "@/contractFunctions/getNumberOfLots";
+import getSingleLotDetails from "@/contractFunctions/getSingleLotDetails";
 import { AddLotModal } from "@/modal/add-lot";
 import SuggestMember from "@/modal/suggest";
+import { get } from "http";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -11,6 +13,17 @@ const AccessInterface = () => {
   const [showModal, setShowModal] = useState(false);
   const [showSuggestModal, setShowSuggestModal] = useState(false);
   const [member, setMember] = useState(false);
+  const [lots, setlots] = useState<
+    Array<{
+      stage: string;
+      details: string;
+      quantity: number;
+      location: string;
+      timestamp: number;
+      source: string;
+      chainId: string;
+    }>
+  >([]);
 
   const copyWalletAddress = async () => {
     const accounts = await window.ethereum?.request({
@@ -36,8 +49,45 @@ const AccessInterface = () => {
       console.log("result", result);
       const numberofLotResponse = await getNumberOfLots();
       console.log("numberofLotResponse", numberofLotResponse);
-      
+      setlots([]);
       setMember(result);
+      const currentLot: Array<any> = [];
+
+      const indexDone: Array<number> = [];
+      for (let i = 0; i < Number(numberofLotResponse); i++) {
+        console.log(i);
+        if (!indexDone.includes(i)) {
+          const response = await getSingleLotDetails(i);
+          console.log("response", response);
+          // setlots((prev) => [
+          //   ...prev,
+          //   {
+          //     stage: response[0],
+          //     details: response[1],
+          //     quantity: Number(response[2]),
+          //     location: response[3],
+          //     timestamp: Number(response[4]),
+          //     source: response[5],
+          //     chainId: response[6],
+          //   },
+          // ]);
+          currentLot.push({
+            stage: response[0],
+            details: response[1],
+            quantity: Number(response[2]),
+            location: response[3],
+            timestamp: Number(response[4]),
+            source: response[5],
+            chainId: response[6],
+          });
+          indexDone.push(i);
+        }
+
+        // const lotResponse = await getLot(i);
+        // console.log("lotResponse", lotResponse);
+      }
+      console.log("currentLot", currentLot);
+      setlots(currentLot);
     };
     getDetails();
   }, []);
@@ -118,47 +168,34 @@ const AccessInterface = () => {
       </div>
 
       <div className="text-center mt-10">
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
-        <p>Lot 1, ChainId, Address</p>
+        <table className="table-auto mx-auto">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Stage</th>
+              <th className="px-4 py-2">Details</th>
+              <th className="px-4 py-2">Quantity</th>
+              <th className="px-4 py-2">Location</th>
+              <th className="px-4 py-2">Timestamp</th>
+              <th className="px-4 py-2">Source</th>
+              <th className="px-4 py-2">Creator</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lots.map((lot, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{lot.stage}</td>
+                <td className="border px-4 py-2">{lot.details}</td>
+                <td className="border px-4 py-2">{lot.quantity}</td>
+                <td className="border px-4 py-2">{lot.location}</td>
+                <td className="border px-4 py-2">
+                  {new Date(lot.timestamp).toLocaleString()}
+                </td>
+                <td className="border px-4 py-2">{lot.source}</td>
+                <td className="border px-4 py-2">{lot.chainId}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

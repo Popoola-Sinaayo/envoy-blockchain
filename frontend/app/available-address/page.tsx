@@ -6,6 +6,7 @@ import { MetaMaskInpageProvider } from "@metamask/providers";
 import setup from "../../utils/detect";
 import { useRouter } from "next/navigation";
 import getAvailableAddresses from "@/contractFunctions/getAvaiableAddresses";
+import getActorFromAddress from "@/contractFunctions/getActorFromAddress";
 
 declare global {
   interface Window {
@@ -18,6 +19,9 @@ const ActiveProposal = () => {
   const [account, setAccount] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [availableAddresses, setAvailableAddresses] = useState<any>({});
+  const [data, setData] = useState<Array<{ address: string; name: string }>>(
+    []
+  );
   const [lengthOfAddress, setLengthOfAddress] = useState(0);
 
   useEffect(() => {
@@ -28,6 +32,18 @@ const ActiveProposal = () => {
         setLengthOfAddress(
           Object.keys(response).filter((key: any) => !isNaN(key)).length
         );
+        const data: Array<{ address: string; name: string }> = [];
+        for (
+          let i = 0;
+          i < Object.keys(response).filter((key: any) => !isNaN(key)).length;
+          i++
+        ) {
+          const name: any = await getActorFromAddress(response[i]);
+          data.push({ address: response[i], name: name[0] });
+          console.log("name", name);
+        }
+        console.log("data", data);
+        setData(data);
         setAvailableAddresses(response);
       } catch (error) {
         console.log("error", error);
@@ -44,11 +60,27 @@ const ActiveProposal = () => {
       <p className="text-center text-[#333333]">All available addresses</p>
 
       <div className="w-full justify-center items-center absolute top-2/4">
-        {Array.from({ length: lengthOfAddress }, (_, i) => i).map((index) => (
+        <table className="table-auto mx-auto">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Address</th>
+              <th className="px-4 py-2">Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{item.address}</td>
+                <td className="border px-4 py-2">{item.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* {Array.from({ length: lengthOfAddress }, (_, i) => i).map((index) => (
           <div key={index}>
             <p className="text-center">{availableAddresses[index]}</p>
           </div>
-        ))}
+        ))} */}
         {/* <p className="text-center">Addresses</p>
         <p className="text-center">Addresses</p>
         <p className="text-center">Addresses</p> */}

@@ -145,7 +145,7 @@ export const AddLotModal: React.FC<{ cancelModal: () => void }> = ({
         <div className="flex" style={{ justifyContent: "space-between" }}>
           <button
             className="mt-15 mb-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
-            onClick={() => {}}
+            onClick={addLot}
           >
             Add New Lot Procurement
           </button>

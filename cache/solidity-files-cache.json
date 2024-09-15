@@ -38,8 +38,8 @@
       ]
     },
     "/Users/macbookair/User/blockchain/contracts/SupplyChainContract.sol": {
-      "lastModificationDate": 1726405311206,
-      "contentHash": "10c145d2a5a55a3030ab62a04c0032d0",
+      "lastModificationDate": 1726419195330,
+      "contentHash": "ee72f1b35fcbb7a59c9d71c5d2bd68ca",
       "sourceName": "contracts/SupplyChainContract.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -67,7 +67,7 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.5"
+        "^0.8.8"
       ],
       "artifacts": [
         "SupplyChainContract"

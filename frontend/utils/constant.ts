@@ -373,6 +373,55 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getSingleLotWithChainId",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "",
         type: "address",
@@ -635,3 +684,5 @@ export const ABI = [
 ];
 
 export const CONTRACT_ADDRESS = "0xF1aa6c95192fB0aA54cf7C4d6473516F168218c2";
+
+// 0x7d2e0df7918f8c7bec1fa55bff32b0638f14c0bd;

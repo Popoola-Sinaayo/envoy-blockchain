@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.5;
+pragma solidity ^0.8.8;
 
 contract SupplyChainContract {
 
@@ -149,6 +149,16 @@ contract SupplyChainContract {
             return (lots[index].stage, lots[index].details, lots[index].quantity, lots[index].location, lots[index].timestamp, lots[index].source, lots[index].creator);
         }
 
+    function getSingleLotWithChainId(uint256 index) public view returns (string memory,
+    uint256,
+        uint256,
+        string memory,
+        uint256,
+        address,
+        address
+        ) {
+            return (lots[index].stage, lots[index].chainId, lots[index].quantity, lots[index].location, lots[index].timestamp, lots[index].source, lots[index].creator);
+        }
     function getRandomNumber() public returns (uint256) {
         nonce++;
         return uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender, nonce))) % 100;
