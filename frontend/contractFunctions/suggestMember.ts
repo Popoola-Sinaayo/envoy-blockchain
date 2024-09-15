@@ -1,8 +1,6 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { Contract, BrowserProvider } from "ethers";
-import { ABI } from "@/utils/constant";
-
-const contractAddress = "0xF1aa6c95192fB0aA54cf7C4d6473516F168218c2";
+import { ABI, CONTRACT_ADDRESS } from "@/utils/constant";
 
 declare global {
   interface Window {
@@ -21,7 +19,7 @@ const suggestMember = async (
     }
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    const contract = new Contract(contractAddress, ABI, signer);
+    const contract = new Contract(CONTRACT_ADDRESS, ABI, signer);
     const data = await contract.waitForDeployment();
     console.log("data", data);
     console.log("contract", contract);

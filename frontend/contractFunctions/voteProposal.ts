@@ -1,8 +1,6 @@
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { Contract, BrowserProvider } from "ethers";
-import { ABI } from "@/utils/constant";
-
-const contractAddress = "0x22A473D42D764C57ED865395727eFe135fAA5915";
+import { ABI, CONTRACT_ADDRESS } from "@/utils/constant";
 
 declare global {
   interface Window {
@@ -17,7 +15,7 @@ const voteProposal = async (vote: boolean) => {
     }
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    const contract = new Contract(contractAddress, ABI, signer);
+    const contract = new Contract(CONTRACT_ADDRESS, ABI, signer);
     await contract.waitForDeployment();
     const voteResponse = await contract.vote(vote);
     return voteResponse;

@@ -1,6 +1,7 @@
 {
   "/page": "app/page.js",
-  "/register-wallet/page": "app/register-wallet/page.js",
   "/access-interface/page": "app/access-interface/page.js",
-  "/active-proposal/page": "app/active-proposal/page.js"
+  "/active-proposal/page": "app/active-proposal/page.js",
+  "/available-address/page": "app/available-address/page.js",
+  "/register-wallet/page": "app/register-wallet/page.js"
 }

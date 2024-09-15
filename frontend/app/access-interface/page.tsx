@@ -1,5 +1,6 @@
 "use client";
 import getIfAddressIsMember from "@/contractFunctions/getIfMember";
+import getNumberOfLots from "@/contractFunctions/getNumberOfLots";
 import { AddLotModal } from "@/modal/add-lot";
 import SuggestMember from "@/modal/suggest";
 import { useRouter } from "next/navigation";
@@ -33,6 +34,9 @@ const AccessInterface = () => {
     const getDetails = async () => {
       const result = await getIfAddressIsMember();
       console.log("result", result);
+      const numberofLotResponse = await getNumberOfLots();
+      console.log("numberofLotResponse", numberofLotResponse);
+      
       setMember(result);
     };
     getDetails();
@@ -98,6 +102,17 @@ const AccessInterface = () => {
             }}
           >
             View Active Proposal
+          </button>
+        )}
+
+        {member && (
+          <button
+            className="mt-15 mb-10 mx-5 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+            onClick={() => {
+              router.push("/available-address");
+            }}
+          >
+            View Members Address
           </button>
         )}
       </div>

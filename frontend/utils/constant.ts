@@ -15,16 +15,6 @@ export const ABI = [
     name: "actors",
     outputs: [
       {
-        internalType: "uint256",
-        name: "actorId",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "actorPin",
-        type: "string",
-      },
-      {
         internalType: "string",
         name: "actorName",
         type: "string",
@@ -48,16 +38,6 @@ export const ABI = [
     ],
     name: "actorsData",
     outputs: [
-      {
-        internalType: "uint256",
-        name: "actorId",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "actorPin",
-        type: "string",
-      },
       {
         internalType: "string",
         name: "actorName",
@@ -212,6 +192,25 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_address",
+        type: "address",
+      },
+    ],
+    name: "getIfAdressIsMember",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "getIfSenderIsMember",
     outputs: [
@@ -226,12 +225,84 @@ export const ABI = [
   },
   {
     inputs: [],
+    name: "getNumberOfPreviousProposal",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "getPreviousProposalDetails",
+    outputs: [
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "proposedAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "voteCounts",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalVoteCount",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "isActive",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getProposalDetails",
     outputs: [
       {
         internalType: "string",
         name: "name",
         type: "string",
+      },
+      {
+        internalType: "address",
+        name: "proposedAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "voteCounts",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalVoteCount",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "isActive",
+        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -407,6 +478,50 @@ export const ABI = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "previousProposals",
+    outputs: [
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "proposedAddress",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "voteCount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalVoteCount",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "primaryProduer",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "isActive",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "_address",
         type: "address",
@@ -518,3 +633,5 @@ export const ABI = [
     type: "function",
   },
 ];
+
+export const CONTRACT_ADDRESS = "0xF1aa6c95192fB0aA54cf7C4d6473516F168218c2";
