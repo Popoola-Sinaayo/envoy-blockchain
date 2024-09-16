@@ -68,6 +68,7 @@ contract SupplyChainContract {
     constructor() {
         owner = msg.sender;
         addAddress(owner); // Adding the owner to the availableAddresses list
+        // actors[msg.sender].actor = "Creator";
     }
 
     function addAddress(address _address) private {

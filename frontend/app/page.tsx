@@ -13,7 +13,12 @@ export default function Home() {
         Monitor the movement of products in blockchain
       </p>
       <div className="w-full flex justify-center items-center absolute top-2/4">
-        <button className="mx-10 px-10 py-[15px] bg-[#0A2540] text-[#FFFFFF] rounded-xl">
+        <button
+          className="mx-10 px-10 py-[15px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+          onClick={() => {
+            router.push("/trace");
+          }}
+        >
           Track a Product With ID
         </button>
         <button

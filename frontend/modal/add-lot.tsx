@@ -80,7 +80,7 @@ export const AddLotModal: React.FC<{ cancelModal: () => void }> = ({
           />
         </div>
         <div
-          className="pb-10"
+          className="my-5"
           style={{ marginTop: "10px", marginBottom: "10px" }}
         >
           <p>Quantity</p>
@@ -138,6 +138,9 @@ export const AddLotModal: React.FC<{ cancelModal: () => void }> = ({
             style={{ padding: "8px" }}
             value={form.chainId}
             onChange={(e) => {
+              if (isNaN(Number(e.target.value))) {
+                return;
+              }
               setForm({ ...form, chainId: e.target.value });
             }}
           />
