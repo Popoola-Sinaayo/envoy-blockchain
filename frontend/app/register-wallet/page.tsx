@@ -20,7 +20,7 @@ const RegisterWallet = () => {
   useEffect(() => {
     const connectwalletHandler = async () => {
       await setup();
-      const accounts = await window?.ethereum?.request({
+      const accounts = await global?.window?.ethereum?.request({
         method: "eth_requestAccounts",
       });
 

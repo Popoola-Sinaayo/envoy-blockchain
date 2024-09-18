@@ -10,8 +10,7 @@ declare global {
 
 async function setup() {
   const provider = await detectEthereumProvider();
-
-  if (provider && provider === window?.ethereum) {
+  if (provider && provider === global?.window?.ethereum) {
     console.log("MetaMask is available!");
     startApp(provider); // Initialize your dapp with MetaMask.
   } else {
@@ -25,6 +24,6 @@ function startApp(provider: any) {
   }
 }
 
-window?.addEventListener("load", setup);
+global?.window?.addEventListener("load", setup);
 
 export default setup;
