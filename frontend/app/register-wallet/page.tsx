@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import setup from "../../utils/detect";
 import { useRouter } from "next/navigation";
@@ -16,19 +16,24 @@ declare global {
 const RegisterWallet = () => {
   const router = useRouter();
   const [account, setAccount] = useState("");
+  const [connectWalletCounter, setConnectWalletCounter] = useState(0);
+  useEffect(() => {
+    const connectwalletHandler = async () => {
+      await setup();
+      const accounts = await window?.ethereum?.request({
+        method: "eth_requestAccounts",
+      });
 
-  const connectwalletHandler = async () => {
-    await setup();
-    const accounts = await window?.ethereum?.request({
-      method: "eth_requestAccounts",
-    });
-
-    console.log("accounts", accounts);
-    if (account !== null && accounts !== undefined) {
-      const accountRead: any = accounts;
-      setAccount(accountRead[0]);
+      console.log("accounts", accounts);
+      if (account !== null && accounts !== undefined) {
+        const accountRead: any = accounts;
+        setAccount(accountRead[0]);
+      }
+    };
+    if (connectWalletCounter > 0) {
+      connectwalletHandler();
     }
-  };
+  }, [connectWalletCounter]);
 
   return (
     <div className="relative h-screen bg-gradient-to-r from-blue-400 to-blue-600 flex flex-col justify-center items-center overflow-hidden">
@@ -50,7 +55,7 @@ const RegisterWallet = () => {
         <div className="relative z-10 w-full flex justify-center items-center mt-10">
           <button
             className="flex items-center space-x-3 px-8 py-4 bg-white text-[#0A2540] font-semibold rounded-full shadow-lg transition-transform duration-300 hover:scale-105 hover:bg-gray-200"
-            onClick={connectwalletHandler}
+            onClick={() => setConnectWalletCounter(connectWalletCounter + 1)}
           >
             <FaWallet size={20} /> {/* Wallet Icon */}
             <span>Connect Wallet</span>
