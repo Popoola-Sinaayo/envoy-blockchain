@@ -62,45 +62,50 @@ const ActiveProposal = () => {
   return (
     <>
       {loading && <PageLoader />}
-      <div className="relative h-screen bg-[#F5F5F5]">
-        <h1 className="text-2xl font-bold text-center pt-10 text-[#333333]">
+      <div className="relative h-screen bg-[#F5F5F5] flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-bold text-center text-[#0A2540] mb-6">
           Envoy Traceability System
         </h1>
-        <p className="text-center text-[#333333]">
+        <p className="text-center text-[#0A2540] mb-8">
           {activeProposal?.isActive
             ? "Active Proposal Ongoing, cast your vote"
             : "No Active Proposal"}
         </p>
 
-        <div className="w-full justify-center items-center absolute top-2/4">
-          <p className="text-center">Name: {activeProposal.name}</p>
-          <p className="text-center">Address: {activeProposal.address}</p>
-          <p className="text-center">
-            Total Votes: {activeProposal.totalCount}
-          </p>
-          <p className="text-center">
-            Total Votes: {activeProposal.totalVotes}
-          </p>
-          <p className="text-center">
-            Primary Producer: {activeProposal.primatyProducer}
-          </p>
+        <div className="bg-white shadow-lg rounded-lg p-6 w-3/4 max-w-4xl">
+          <h2 className="text-xl font-bold text-[#0A2540] mb-4">
+            Proposal Details
+          </h2>
+          <div className="space-y-4">
+            <p className="text-[#333333]">
+              <strong>Name:</strong> {activeProposal.name}
+            </p>
+            <p className="text-[#333333]">
+              <strong>Address:</strong> {activeProposal.address}
+            </p>
+            <p className="text-[#333333]">
+              <strong>Total Votes (Count):</strong> {activeProposal.totalCount}
+            </p>
+            <p className="text-[#333333]">
+              <strong>Total Votes (Votes):</strong> {activeProposal.totalVotes}
+            </p>
+            <p className="text-[#333333]">
+              <strong>Primary Producer:</strong>{" "}
+              {activeProposal.primatyProducer ? "Yes" : "No"}
+            </p>
+          </div>
+
           {activeProposal.isActive && (
-            <div className="text-center mt-10">
+            <div className="mt-8 flex justify-center space-x-4">
               <button
-                className="mx-10 px-10 py-[15px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
-                onClick={() => {
-                  vote(true);
-                  // router.push("/access-interface");
-                }}
+                className="px-8 py-2 bg-[#0A2540] text-white rounded-xl shadow-md hover:bg-[#0A2540]/80 transition"
+                onClick={() => vote(true)}
               >
                 Upvote
               </button>
               <button
-                className="mx-10 px-10 py-[15px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
-                onClick={() => {
-                  vote(false);
-                  // router.push("/access-interface");
-                }}
+                className="px-8 py-2 bg-[#0A2540] text-white rounded-xl shadow-md hover:bg-[#0A2540]/80 transition"
+                onClick={() => vote(false)}
               >
                 Downvote
               </button>

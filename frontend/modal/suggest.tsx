@@ -27,22 +27,28 @@ const SuggestMember: React.FC<{ cancelModal: () => void }> = ({
         position: "fixed",
         height: "100vh",
         width: "100%",
-        backgroundColor: "gray",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        top: 0,
+        left: 0,
+        zIndex: 9999,
       }}
     >
       <div
-        className="top-[50px] bg-[#FFFFFF] p-10 rounded-xl"
+        className="bg-[#FFFFFF] p-8 rounded-xl shadow-lg"
         style={{
-          left: "45%",
-          transform: "translate(0%, 50%)",
-          width: "80%",
-          margin: "auto",
+          width: "90%",
+          maxWidth: "600px",
+          padding: "24px",
+          backgroundColor: "#FFFFFF",
         }}
       >
         <div className="" style={{ marginTop: "10px", marginBottom: "10px" }}>
           <p>Member Address</p>
           <input
-            className="border-black border-2 p-10 py-15 w-full my-5"
+            className="p-10 border border-[#0A2540] py-15 w-full my-5 rounded-lg"
             placeholder="Enter Member Address"
             style={{ padding: "8px" }}
             value={form.address}
@@ -62,7 +68,7 @@ const SuggestMember: React.FC<{ cancelModal: () => void }> = ({
             Suggest Member
           </button>
           <button
-            className="mt-15 mb-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+            className="mt-15 mb-10 px-8 py-[10px] text-[#0A2540] bg-[#FFFFFF] rounded-xl shadow-md hover:bg-[#C4C4C4]"
             onClick={cancelModal}
           >
             Cancel

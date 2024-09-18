@@ -36,62 +36,42 @@ const AccessInterface = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const accountRead: any = accounts;
       //   setAccount(accountRead[0]);
-      navigator.clipboard.writeText(accountRead[0]);
-      alert("Address copied to clipboard");
+
+      if (accountRead) {
+        navigator.clipboard.writeText(accountRead[0]);
+        alert("Address copied to clipboard");
+      }
     }
   };
 
   useEffect(() => {
-    if (window.ethereum === undefined) {
+    if (!window.ethereum) {
       alert("MetaMask not found");
     }
+
     const getDetails = async () => {
       const result = await getIfAddressIsMember();
-      console.log("result", result);
       const numberofLotResponse = await getNumberOfLots();
-      console.log("numberofLotResponse", numberofLotResponse);
-      setlots([]);
       setMember(result);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const currentLot: Array<any> = [];
-
-      const indexDone: Array<number> = [];
       for (let i = 0; i < Number(numberofLotResponse); i++) {
-        console.log(i);
-        if (!indexDone.includes(i)) {
-          const response = await getSingleLotDetails(i);
-          console.log("response", response);
-          // setlots((prev) => [
-          //   ...prev,
-          //   {
-          //     stage: response[0],
-          //     details: response[1],
-          //     quantity: Number(response[2]),
-          //     location: response[3],
-          //     timestamp: Number(response[4]),
-          //     source: response[5],
-          //     chainId: response[6],
-          //   },
-          // ]);
-          currentLot.push({
-            stage: response[0],
-            details: response[1],
-            quantity: Number(response[2]),
-            location: response[3],
-            timestamp: Number(response[4]),
-            source: response[5],
-            chainId: response[6],
-          });
-          indexDone.push(i);
-        }
-
-        // const lotResponse = await getLot(i);
-        // console.log("lotResponse", lotResponse);
+        const response = await getSingleLotDetails(i);
+        currentLot.push({
+          stage: response[0],
+          details: response[1],
+          quantity: Number(response[2]),
+          location: response[3],
+          timestamp: Number(response[4]),
+          source: response[5],
+          chainId: response[6],
+        });
       }
-      console.log("currentLot", currentLot);
       setlots(currentLot);
       setLoading(false);
     };
+
     getDetails();
   }, []);
 
@@ -109,27 +89,27 @@ const AccessInterface = () => {
         {showSuggestModal && (
           <SuggestMember cancelModal={() => setShowSuggestModal(false)} />
         )}
-        <h1 className="text-2xl font-bold text-center pt-10 text-[#333333]">
+        <h1 className="text-2xl font-bold text-center pt-10 text-[#0A2540]">
           Envoy Traceability System
         </h1>
-        <p className="text-center text-[#333333]">
+        <p className="text-center text-[#0A2540]">
           {member
             ? "You're a member of the Envoy Traceability System"
             : "You're not a member of the Envoy Traceability System"}
         </p>
         <div className="text-center mt-5 flex-col">
           <button
-            className="mx-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+            className="mx-10 px-8 py-[10px] bg-[#0A2540] text-white rounded-xl"
             onClick={() => {
               copyWalletAddress();
             }}
           >
-            Copy addresss
+            Copy address
           </button>
 
           {member && (
             <button
-              className="mt-15 mb-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+              className="mt-5 mb-10 px-8 py-[10px] bg-[#0A2540] text-white rounded-xl"
               onClick={() => {
                 setShowModal(true);
               }}
@@ -140,7 +120,7 @@ const AccessInterface = () => {
 
           {member && (
             <button
-              className="mt-15 mb-10 mx-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+              className="mt-5 mb-10 mx-10 px-8 py-[10px] bg-[#0A2540] text-white rounded-xl"
               onClick={() => {
                 setShowSuggestModal(true);
               }}
@@ -151,7 +131,7 @@ const AccessInterface = () => {
 
           {member && (
             <button
-              className="mt-15 mb-10 mx-5 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+              className="mt-5 mb-10 mx-5 px-8 py-[10px] bg-[#0A2540] text-white rounded-xl"
               onClick={() => {
                 router.push("/active-proposal");
               }}
@@ -162,7 +142,7 @@ const AccessInterface = () => {
 
           {member && (
             <button
-              className="mt-15 mb-10 mx-5 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+              className="mt-5 mb-10 mx-5 px-8 py-[10px] bg-[#0A2540] text-white rounded-xl"
               onClick={() => {
                 router.push("/available-address");
               }}
@@ -173,9 +153,9 @@ const AccessInterface = () => {
         </div>
 
         <div className="text-center mt-10">
-          <table className="table-auto mx-auto">
+          <table className="table-auto mx-auto bg-white shadow-md rounded-lg">
             <thead>
-              <tr>
+              <tr className="bg-[#0A2540] text-white">
                 <th className="px-4 py-2">Stage</th>
                 <th className="px-4 py-2">Details</th>
                 <th className="px-4 py-2">Quantity</th>
@@ -187,7 +167,7 @@ const AccessInterface = () => {
             </thead>
             <tbody>
               {lots.map((lot, index) => (
-                <tr key={index}>
+                <tr key={index} className="border-b border-[#0A2540]">
                   <td className="border px-4 py-2">{lot.stage}</td>
                   <td className="border px-4 py-2">{lot.details}</td>
                   <td className="border px-4 py-2">{lot.quantity}</td>
@@ -206,5 +186,4 @@ const AccessInterface = () => {
     </>
   );
 };
-
 export default AccessInterface;

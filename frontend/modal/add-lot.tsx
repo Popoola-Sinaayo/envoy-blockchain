@@ -1,3 +1,4 @@
+"use client";
 import addLotDetails from "@/contractFunctions/addLotDetails";
 import React, { useState } from "react";
 
@@ -40,121 +41,141 @@ export const AddLotModal: React.FC<{ cancelModal: () => void }> = ({
         position: "fixed",
         height: "100vh",
         width: "100%",
-        backgroundColor: "gray",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        top: 0,
+        left: 0,
+        zIndex: 9999,
       }}
     >
       <div
-        className="top-[50px] bg-[#FFFFFF] p-10 rounded-xl"
+        className="bg-[#FFFFFF] p-8 rounded-xl shadow-lg"
         style={{
-          left: "45%",
-          transform: "translate(0%, 30%)",
-          width: "80%",
-          margin: "auto",
+          width: "90%",
+          maxWidth: "600px",
+          padding: "24px",
+          backgroundColor: "#FFFFFF",
         }}
       >
-        <div className="" style={{ marginTop: "10px", marginBottom: "10px" }}>
-          <p>Stage</p>
+        <h2 className="text-2xl font-bold text-[#0A2540] mb-6">
+          Add New Lot Procurement
+        </h2>
+        <div className="my-4">
+          <label className="block text-[#0A2540] mb-2">Stage</label>
           <input
-            className="border-black border-2 p-10 py-15 w-full my-5"
+            className="border border-[#0A2540] p-3 rounded-lg w-full"
             placeholder="Stage"
-            style={{ padding: "8px" }}
             value={form.stage}
-            onChange={(e) => {
-              setForm({ ...form, stage: e.target.value });
+            onChange={(e) => setForm({ ...form, stage: e.target.value })}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
             }}
           />
         </div>
-        <div
-          className="my-5"
-          style={{ marginTop: "10px", marginBottom: "10px" }}
-        >
-          <p>Details</p>
+        <div className="my-4">
+          <label className="block text-[#0A2540] mb-2">Details</label>
           <input
-            className="border-black border-2 p-10 py-15 w-full"
+            className="border border-[#0A2540] p-3 rounded-lg w-full"
             placeholder="Details"
-            style={{ padding: "8px" }}
             value={form.details}
-            onChange={(e) => {
-              setForm({ ...form, details: e.target.value });
+            onChange={(e) => setForm({ ...form, details: e.target.value })}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
             }}
           />
         </div>
-        <div
-          className="my-5"
-          style={{ marginTop: "10px", marginBottom: "10px" }}
-        >
-          <p>Quantity</p>
+        <div className="my-4">
+          <label className="block text-[#0A2540] mb-2">Quantity</label>
           <input
-            className="border-black border-2 p-10 py-15 w-full"
-            style={{ padding: "8px" }}
+            className="border border-[#0A2540] p-3 rounded-lg w-full"
             placeholder="Quantity"
+            type="number"
             value={form.quantity}
             onChange={(e) => {
-              if (isNaN(Number(e.target.value))) {
-                return;
+              if (!isNaN(Number(e.target.value))) {
+                setForm({ ...form, quantity: Number(e.target.value) });
               }
-              setForm({ ...form, quantity: Number(e.target.value) });
+            }}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
             }}
           />
         </div>
-        <div
-          className="my-5"
-          style={{ marginTop: "10px", marginBottom: "10px" }}
-        >
-          <p>Location</p>
+        <div className="my-4">
+          <label className="block text-[#0A2540] mb-2">Location</label>
           <input
-            className="border-black border-2 p-10 py-15 w-full"
+            className="border border-[#0A2540] p-3 rounded-lg w-full"
             placeholder="Location"
-            style={{ padding: "8px" }}
             value={form.location}
-            onChange={(e) => {
-              setForm({ ...form, location: e.target.value });
+            onChange={(e) => setForm({ ...form, location: e.target.value })}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
             }}
           />
         </div>
-        <div
-          className="my-5"
-          style={{ marginTop: "10px", marginBottom: "10px" }}
-        >
-          <p>Source</p>
+        <div className="my-4">
+          <label className="block text-[#0A2540] mb-2">Source</label>
           <input
-            className="border-black border-2 p-10 py-15 w-full"
+            className="border border-[#0A2540] p-3 rounded-lg w-full"
             placeholder="Source"
-            style={{ padding: "8px" }}
             value={form.source}
-            onChange={(e) => {
-              setForm({ ...form, source: e.target.value });
+            onChange={(e) => setForm({ ...form, source: e.target.value })}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
+            }}
+          />
+        </div>
+        <div className="my-4">
+          <label className="block text-[#0A2540] mb-2">Chain ID</label>
+          <input
+            className="border border-[#0A2540] pl-10 rounded-lg w-full"
+            placeholder="Chain ID"
+            value={form.chainId}
+            onChange={(e) => setForm({ ...form, chainId: e.target.value })}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
             }}
           />
         </div>
         <div
-          className="my-5"
-          style={{ marginTop: "10px", marginBottom: "10px" }}
+          className="flex flex-row justify-between mt-8"
+          style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <p>Chain ID</p>
-          <input
-            className="border-black border-2 p-10 py-15 w-full"
-            placeholder="Chain ID"
-            style={{ padding: "8px" }}
-            value={form.chainId}
-            onChange={(e) => {
-              if (isNaN(Number(e.target.value))) {
-                return;
-              }
-              setForm({ ...form, chainId: e.target.value });
-            }}
-          />
-        </div>
-        <div className="flex" style={{ justifyContent: "space-between" }}>
           <button
-            className="mt-15 mb-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+            className="px-6 py-2 w-80 bg-[#0A2540] text-[#FFFFFF] rounded-lg shadow-md hover:bg-[#082D4B]"
             onClick={addLot}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
+              paddingRight: "10px",
+            }}
           >
-            Add New Lot Procurement
+            Add Lot
           </button>
           <button
-            className="mt-15 mb-10 px-8 py-[10px] bg-[#0A2540] text-[#FFFFFF] rounded-xl"
+            className="px-6 py-2 bg-[#E0E0E0] text-[#0A2540] rounded-lg shadow-md hover:bg-[#C4C4C4]"
             onClick={cancelModal}
+            style={{
+              paddingTop: "5px",
+              paddingBottom: "5px",
+              paddingLeft: "10px",
+              paddingRight: "10px",
+            }}
           >
             Cancel
           </button>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import getIfAddressIsMember from "@/contractFunctions/getIfMember";
 import getNumberOfLots from "@/contractFunctions/getNumberOfLots";
@@ -38,20 +39,16 @@ const TraceItem = () => {
       alert("MetaMask not found");
     }
     const getDetails = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const result = await getIfAddressIsMember();
-      console.log("result", result);
       const numberofLotResponse = await getNumberOfLots();
-      console.log("numberofLotResponse", numberofLotResponse);
       setlots([]);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const currentLot: Array<any> = [];
 
       const indexDone: Array<number> = [];
       for (let i = 0; i < Number(numberofLotResponse); i++) {
-        console.log(i);
         if (!indexDone.includes(i)) {
           const response = await getSingleLotDetailsChainId(i);
-          console.log("response", response);
           currentLot.push({
             stage: response[0],
             details: Number(response[1]),
@@ -63,11 +60,7 @@ const TraceItem = () => {
           });
           indexDone.push(i);
         }
-
-        // const lotResponse = await getLot(i);
-        // console.log("lotResponse", lotResponse);
       }
-      console.log("currentLot", currentLot);
       setlots(currentLot);
       setfilteredLots(currentLot);
       setLoading(false);
@@ -80,10 +73,6 @@ const TraceItem = () => {
     if (chainId === "") {
       setfilteredLots(lots);
     } else {
-      console.log("chainId", chainId);
-      console.log(
-        lots.filter((lot) => lot.details.toString() === chainId.toString())
-      );
       setfilteredLots(
         lots.filter((lot) => lot.details.toString() === chainId.toString())
       );
@@ -95,15 +84,15 @@ const TraceItem = () => {
     <>
       {loading && <PageLoader />}
       <div className="relative h-full bg-[#F5F5F5]">
-        <h1 className="text-2xl font-bold text-center pt-10 text-[#333333]">
+        <h1 className="text-3xl font-bold text-center pt-10 text-[#0A2540]">
           Envoy Traceability System
         </h1>
-        <p className="text-center text-[#333333]">Track With Chain ID</p>
-        <div className="pt-10 pb-10 flex flex-row items-center mr-auto ml-auto w-4/5">
+        <p className="text-center text-[#0A2540]">Track With Chain ID</p>
+
+        <div className="pt-10 pb-10 flex flex-row items-center mx-auto w-4/5">
           <div className="flex-1">
             <input
-              className="border-black border-2 p-10 py-15 w-full rounded-lg"
-              style={{ padding: "8px" }}
+              className="border-2 border-[#0A2540] px-4 py-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0A2540]"
               placeholder="Enter Chain ID to search"
               value={chainId}
               onChange={(e) => {
@@ -112,36 +101,52 @@ const TraceItem = () => {
             />
           </div>
         </div>
+
         <div className="text-center mt-10">
-          <table className="table-auto mx-auto">
-            <thead>
+          <table className="table-auto mx-auto w-full max-w-4xl bg-white shadow-lg rounded-lg">
+            <thead className="bg-[#0A2540] text-white">
               <tr>
-                <th className="px-4 py-2">Stage</th>
-                <th className="px-4 py-2">Chain ID</th>
-                <th className="px-4 py-2">Quantity</th>
-                <th className="px-4 py-2">Location</th>
-                <th className="px-4 py-2">Timestamp</th>
-                <th className="px-4 py-2">Source</th>
-                <th className="px-4 py-2">Creator</th>
+                <th className="px-4 py-3 text-left">Stage</th>
+                <th className="px-4 py-3 text-left">Chain ID</th>
+                <th className="px-4 py-3 text-left">Quantity</th>
+                <th className="px-4 py-3 text-left">Location</th>
+                <th className="px-4 py-3 text-left">Timestamp</th>
+                <th className="px-4 py-3 text-left">Source</th>
+                <th className="px-4 py-3 text-left">Creator</th>
               </tr>
             </thead>
             <tbody>
               {chainId &&
                 filteredLots.map((lot, index) => (
-                  <tr key={index}>
-                    <td className="border px-4 py-2">{lot.stage}</td>
-                    <td className="border px-4 py-2">{lot.details}</td>
-                    <td className="border px-4 py-2">{lot.quantity}</td>
-                    <td className="border px-4 py-2">{lot.location}</td>
-                    <td className="border px-4 py-2">
+                  <tr key={index} className="bg-[#F9F9F9] odd:bg-white">
+                    <td className="border px-4 py-3 text-[#333333]">
+                      {lot.stage}
+                    </td>
+                    <td className="border px-4 py-3 text-[#333333]">
+                      {lot.details}
+                    </td>
+                    <td className="border px-4 py-3 text-[#333333]">
+                      {lot.quantity}
+                    </td>
+                    <td className="border px-4 py-3 text-[#333333]">
+                      {lot.location}
+                    </td>
+                    <td className="border px-4 py-3 text-[#333333]">
                       {new Date(lot.timestamp).toLocaleString()}
                     </td>
-                    <td className="border px-4 py-2">{lot.source}</td>
-                    <td className="border px-4 py-2">{lot.chainId}</td>
+                    <td className="border px-4 py-3 text-[#333333]">
+                      {lot.source}
+                    </td>
+                    <td className="border px-4 py-3 text-[#333333]">
+                      {lot.chainId}
+                    </td>
                   </tr>
                 ))}
             </tbody>
           </table>
+          {filteredLots.length === 0 && (
+            <p className="text-center text-[#333333] mt-4">No data available</p>
+          )}
         </div>
       </div>
     </>
