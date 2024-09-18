@@ -19,7 +19,7 @@ const RegisterWallet = () => {
 
   const connectwalletHandler = async () => {
     await setup();
-    const accounts = await window.ethereum?.request({
+    const accounts = await window?.ethereum?.request({
       method: "eth_requestAccounts",
     });
 

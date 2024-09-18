@@ -27,7 +27,7 @@ const AccessInterface = () => {
   >([]);
 
   const copyWalletAddress = async () => {
-    const accounts = await window.ethereum?.request({
+    const accounts = await window?.ethereum?.request({
       method: "eth_requestAccounts",
     });
 
@@ -45,7 +45,7 @@ const AccessInterface = () => {
   };
 
   useEffect(() => {
-    if (!window.ethereum) {
+    if (!window?.ethereum) {
       alert("MetaMask not found");
     }
 

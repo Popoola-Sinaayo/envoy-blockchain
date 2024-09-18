@@ -35,7 +35,7 @@ const TraceItem = () => {
 
   const [chainId, setChainId] = useState("");
   useEffect(() => {
-    if (window.ethereum === undefined) {
+    if (window?.ethereum === undefined) {
       alert("MetaMask not found");
     }
     const getDetails = async () => {

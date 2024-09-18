@@ -11,7 +11,7 @@ declare global {
 async function setup() {
   const provider = await detectEthereumProvider();
 
-  if (provider && provider === window.ethereum) {
+  if (provider && provider === window?.ethereum) {
     console.log("MetaMask is available!");
     startApp(provider); // Initialize your dapp with MetaMask.
   } else {
@@ -20,11 +20,11 @@ async function setup() {
 }
 
 function startApp(provider: any) {
-  if (provider !== window.ethereum) {
+  if (provider !== window?.ethereum) {
     console.error("Do you have multiple wallets installed?");
   }
 }
 
-window.addEventListener("load", setup);
+window?.addEventListener("load", setup);
 
 export default setup;
